@@ -1,0 +1,57 @@
+buildscript {
+	repositories {
+		maven {
+			url 'https://maven.aliyun.com/repository/gradle-plugin'
+		}
+	}
+}
+
+plugins {
+	id 'java'
+	//id 'maven'
+	id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+}
+
+version '1.0'
+
+sourceCompatibility = 11
+targetCompatibility=11
+
+repositories{
+	maven { url "https://nexus.kuku.me/repository/maven-public/" }
+	maven { url 'https://maven.aliyun.com/repository/google/' }
+	maven{ url'https://maven.aliyun.com/nexus/content/groups/public/' }
+	mavenCentral();
+	maven{ url 'https://jitpack.io' }
+}
+
+ext{
+}
+
+dependencies{
+	compileOnly group: 'com.github.RW-HPS.RW-HPS', name: 'Server', version: '-SNAPSHOT'
+	//compileOnly group: 'com.github.RW-HPS', name: 'RW-HPS', version: '-SNAPSHOT'
+	//compileOnly 'com.github.RW-HPS.RW-HPS:Server:-SNAPSHOT'
+	implementation 'net.mamoe:mirai-core:2.6.5'
+	compileOnly 'net.mamoe:mirai-core-jvm:2.6.5'
+
+}
+
+jar{
+	exclude 'META-INF/'
+
+	manifest {
+		attributes 'Main-Class': 'example.Main'
+	}
+
+	from{
+		configurations.runtimeClasspath.collect{it.isDirectory() ? it : zipTree(it)}
+	}
+}
+
+tasks.withType(JavaCompile) {  
+	options.encoding = "UTF-8"  
+	options.compilerArgs << "-Xlint:unchecked" << "-Werror"
+	options.compilerArgs << "-Xdiags:verbose" << "-Werror"
+	options.compilerArgs << "-Xlint:deprecation" << "-Werror"
+}

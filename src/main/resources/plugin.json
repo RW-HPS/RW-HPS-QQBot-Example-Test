@@ -1,0 +1,8 @@
+{
+  "name": "example-QQBot-Test",
+  "author": "Dr",
+  "main": "example.Main",
+  "description": "QQBot-Test",
+  "version": "1.0.0",
+  "supportedVersions": "> 1.3.0"
+}
